@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "Marvel movies",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
