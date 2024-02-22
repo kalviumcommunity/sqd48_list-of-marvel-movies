@@ -4,6 +4,8 @@ const port = process.env.PUBLIC_PORT || 3000;
 require("dotenv").config();
 const { MongoClient } = require("mongodb");
 app.use(express.json());
+const routes = require('./routes')
+
 
 const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri, {
@@ -34,6 +36,9 @@ app.get("/", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
+app.use('/', routes);
 
 if (require.main === module) {
   app.listen(port, () => {
