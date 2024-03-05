@@ -1,50 +1,35 @@
+// server.js
 const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors'); // Make sure to install the cors package
+require("dotenv").config();
+
 const app = express();
 const port = process.env.PUBLIC_PORT || 3000;
-require("dotenv").config();
-const { MongoClient } = require("mongodb");
+
+app.use(cors()); // Use CORS to avoid cross-origin issues
 app.use(express.json());
-const routes = require('./routes')
 
+const MovieModel = require('./models/movies'); // Adjust the path as necessary
 
-const uri = process.env.MONGODB_URI;
-const client = new MongoClient(uri, {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+  useUnifiedTopology: true,
+}).then(() => console.log("Connected to DB"))
+.catch((error) => console.error("Could not connect to MongoDB:", error));
 
-// define the ping route with the response in JSON
-app.get('/ping',(req,res)=>{
-  res.json({message:'pong'});
-});
-
-app.get("/", async (req, res) => {
+app.get("/movies", async (req, res) => {
   try {
-    // Connect to the MongoDB database
-    await client.connect();
-
-    // Check if the connection is successful
-    if (client.topology.isConnected()) {
-      res.json({ message: "pong", database_status: "Connected" });
-      console.log("yes");
-    } else {
-      res.json({ message: "pong", database_status: "Disconnected" });
-      console.log("no");
-    }
+    const movies = await MovieModel.find({});
+    res.json(movies);
   } catch (error) {
-    console.error("Error connecting to the database:", error);
+    console.error("Failed to fetch movies:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-
-app.use('/', routes);
-
-if (require.main === module) {
-  app.listen(port, () => {
-    console.log(`🚀 server running on PORT: ${port}`);
-  });
-}
-
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});
 
 module.exports = app;
