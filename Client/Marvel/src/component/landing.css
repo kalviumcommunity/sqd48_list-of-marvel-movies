@@ -1,0 +1,43 @@
+div {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Styles for the heading */
+h2 {
+    color: #f56b6b;
+    text-align: center;
+}
+
+/* Styles for the list of movies */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #4a1616;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Styles for the "Add Movie" link */
+.add-movie {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.add-movie:hover {
+    background-color: #0056b3;
+}
