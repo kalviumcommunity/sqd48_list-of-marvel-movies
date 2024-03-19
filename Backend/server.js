@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const Joi = require('joi'); // Import Joi
 require("dotenv").config();
 
 const app = express();
@@ -10,8 +11,8 @@ app.use(cors());
 app.use(express.json());
 
 // Models
-const MovieModel = require('./models/movies'); // Adjust the path as necessary
-const ReviewModel = require('./models/Review'); // Adjust the path as necessary
+const MovieModel = require('./models/movies'); 
+const ReviewModel = require('./models/Review');
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, {
@@ -20,6 +21,13 @@ mongoose.connect(process.env.MONGODB_URI, {
 })
 .then(() => console.log("Connected to DB"))
 .catch((error) => console.error("Could not connect to MongoDB:", error));
+
+// Define Joi validation schema for reviews
+const reviewSchema = Joi.object({
+  movieTitle: Joi.string().required(),
+  review: Joi.string().required(),
+  rating: Joi.number().min(0).max(5).required(), // Example: assuming rating is between 0 and 5
+});
 
 // Fetch all movies
 app.get("/movies", async (req, res) => {
@@ -32,10 +40,17 @@ app.get("/movies", async (req, res) => {
   }
 });
 
-// Add a new review
+// Add a new review with Joi validation
 app.post("/reviews", async (req, res) => {
+  // Validate the incoming review data against the schema
+  const { error, value } = reviewSchema.validate(req.body);
+  if (error) {
+    // If validation fails, return a 400 Bad Request response with the error message
+    return res.status(400).json({ error: error.details[0].message });
+  }
+
   try {
-    const newReview = new ReviewModel(req.body);
+    const newReview = new ReviewModel(value); // Use the validated value
     await newReview.save();
     res.status(201).json(newReview);
   } catch (error) {
