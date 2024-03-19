@@ -22,7 +22,6 @@ const AddReview = () => {
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
-            // Optionally reset form fields here or handle UI updates
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -39,6 +38,7 @@ const AddReview = () => {
             <label>
                 Review:
                 <textarea value={review} onChange={(e) => setReview(e.target.value)} />
+                {/* <input type="text" value={review} onChange={(e) => setReview(e.target.value)} /> */}
             </label>
             <label>
                 Rating:
