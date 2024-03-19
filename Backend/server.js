@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const Joi = require('joi'); // Import Joi
+const Joi = require('joi'); 
 require("dotenv").config();
 
 const app = express();
@@ -26,7 +26,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 const reviewSchema = Joi.object({
   movieTitle: Joi.string().required(),
   review: Joi.string().required(),
-  rating: Joi.number().min(0).max(5).required(), // Example: assuming rating is between 0 and 5
+  rating: Joi.number().min(0).max(5).required(),
 });
 
 // Fetch all movies

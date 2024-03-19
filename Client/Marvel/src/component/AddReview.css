@@ -1,4 +1,3 @@
-/* AddReview.css */
 .form-container {
     max-width: 500px;
     margin: auto;
@@ -28,7 +27,6 @@
     margin-top: 20px;
   }
   
-  /* Responsive Styles */
   @media (max-width: 600px) {
     .form-container {
       padding: 10px;
