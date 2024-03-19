@@ -55,6 +55,36 @@ app.get("/reviews", async (req, res) => {
   }
 });
 
+// Delete a review
+app.delete("/reviews/:id", async (req, res) => {
+  try {
+    const result = await ReviewModel.findByIdAndDelete(req.params.id);
+    if (result) {
+      res.status(200).json({ message: "Review successfully deleted" });
+    } else {
+      res.status(404).json({ message: "Review not found" });
+    }
+  } catch (error) {
+    console.error("Failed to delete review:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Update a review
+app.put("/reviews/:id", async (req, res) => {
+  try {
+    const updatedReview = await ReviewModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (updatedReview) {
+      res.status(200).json(updatedReview);
+    } else {
+      res.status(404).json({ message: "Review not found" });
+    }
+  } catch (error) {
+    console.error("Failed to update review:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

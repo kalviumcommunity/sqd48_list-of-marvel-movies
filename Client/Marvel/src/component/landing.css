@@ -7,8 +7,9 @@ div {
 
 /* Styles for the heading */
 h2 {
-    color: #f56b6b;
+    color: #007bff;
     text-align: center;
+    font-size: 50px;
 }
 
 /* Styles for the list of movies */
@@ -18,7 +19,7 @@ ul {
 }
 
 li {
-    background-color: #4a1616;
+    background-color: #28a745;
     margin: 10px 0;
     padding: 10px;
     border-radius: 5px;
