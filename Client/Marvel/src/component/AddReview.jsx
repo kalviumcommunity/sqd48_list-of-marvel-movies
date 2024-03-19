@@ -1,6 +1,6 @@
 // AddReview.jsx
 import React, { useState } from 'react';
-import './AddReview.css'; // Adjust the path as necessary to correctly import the CSS file
+import './AddReview.css'; 
 import { useNavigate } from 'react-router-dom';
 
 const AddReview = () => {
